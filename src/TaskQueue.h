@@ -31,12 +31,13 @@
 #ifndef __OETASKQUEUE_H__
 #define __OETASKQUEUE_H__
 
-#include "Task.h"
 #include <deque>
 #include <mutex>
 #include <condition_variable>
 #include <unordered_map>
 #include <memory>
+
+#include "Task.h"
 
 /// 任务队列类
 class OETaskQueue
