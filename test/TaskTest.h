@@ -31,8 +31,9 @@
 #ifndef __TASKTEST_H__
 #define __TASKTEST_H__
 
-#include "Task.h"
 #include <iostream>
+
+#include "Task.h"
 
 class OETaskTest
 	: public OETask
