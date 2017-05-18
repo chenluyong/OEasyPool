@@ -40,7 +40,7 @@ OEThreadPool::OEThreadPool(void)
 }
 
 OEThreadPool::~OEThreadPool(void) {
-
+    release();
 }
 
 // 初始化资源
