@@ -27,14 +27,15 @@
 *
 */
 
+#include <time.h>
 #include <iostream>
+#include <memory>
+
 #include "ThreadPool.h"
 #include "../test/TaskTest.h"
-#include <memory>
 using namespace std;
 
 
-#include <time.h>
 
 int main(void)
 {
