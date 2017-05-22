@@ -56,7 +56,6 @@ int main(void)
 			std::shared_ptr<OETaskTest> request = std::shared_ptr<OETaskTest>(new OETaskTest());
             
 			threadPool->addTask(request);
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
 //            if (request->getID() == 101000) {
 //				break;
 //            }
