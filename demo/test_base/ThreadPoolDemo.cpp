@@ -50,7 +50,6 @@ int main(void)
 		std::shared_ptr<OEThreadPool> threadPool(new OEThreadPool);
 		threadPool->init(threadPoolConfig);
 
-		int nID = 0;
 		while (true)
 		{
 			std::shared_ptr<OETaskTest> request = std::shared_ptr<OETaskTest>(new OETaskTest());
