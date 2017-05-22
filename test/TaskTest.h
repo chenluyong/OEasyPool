@@ -54,7 +54,7 @@ public:
 		return 0;
 	}
 	// 任务已完成
-	virtual int onCompleted(int code) {
+    virtual int onCompleted(int) {
 		// 任务已完成，返回码为code
 		std::cout << "task : " << id_ << " completed." << std::endl;
 		return 0;

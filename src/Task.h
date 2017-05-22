@@ -57,7 +57,7 @@ public:
 	// 任务已取消回调
 	virtual int onCanceled(){ return 1; }
 	// 任务已完成
-	virtual int onCompleted(int code){ return 1; }
+    virtual int onCompleted(int){ return 1; }
 
 	// 获取ID
 	int getID(){ return id_; }
