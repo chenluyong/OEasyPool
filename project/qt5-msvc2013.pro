@@ -10,13 +10,13 @@ DESTDIR   = ../bin
 
 
 SOURCES += "../demo/test_base/ThreadPoolDemo.cpp" \
-    ../src/TaskQueue.cpp \
-    ../src/ThreadPool.cpp \
+    ../src/OE/EasyPool/TaskQueue.cpp \
+    ../src/OE/EasyPool/ThreadPool.cpp \
     ../test/TaskTest.cpp
 
 
 HEADERS += \
-    ../src/Task.h \
-    ../src/TaskQueue.h \
-    ../src/ThreadPool.h \
+    ../src/OE/EasyPool/Task.h \
+    ../src/OE/EasyPool/TaskQueue.h \
+    ../src/OE/EasyPool/ThreadPool.h \
     ../test/TaskTest.h
