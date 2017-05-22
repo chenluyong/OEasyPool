@@ -24,28 +24,28 @@
     <ClCompile Include="ThreadPoolDemo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TaskQueue.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\ThreadPool.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\test\TaskTest.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\OE\EasyPool\TaskQueue.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\OE\EasyPool\ThreadPool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Task.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\TaskQueue.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ThreadPool.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\test\TaskTest.h">
       <Filter>test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\OE\EasyPool\Task.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\OE\EasyPool\TaskQueue.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\OE\EasyPool\ThreadPool.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

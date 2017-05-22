@@ -49,7 +49,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\</OutDir>
-    <IncludePath>../../src/;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\src;$(IncludePath)</IncludePath>
     <IntDir>..\log\Release\test_base\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -84,14 +84,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ThreadPoolDemo.cpp" />
-    <ClCompile Include="..\..\src\TaskQueue.cpp" />
-    <ClCompile Include="..\..\src\ThreadPool.cpp" />
+    <ClCompile Include="..\..\src\OE\EasyPool\TaskQueue.cpp" />
+    <ClCompile Include="..\..\src\OE\EasyPool\ThreadPool.cpp" />
     <ClCompile Include="..\..\test\TaskTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Task.h" />
-    <ClInclude Include="..\..\src\TaskQueue.h" />
-    <ClInclude Include="..\..\src\ThreadPool.h" />
+    <ClInclude Include="..\..\src\OE\EasyPool\Task.h" />
+    <ClInclude Include="..\..\src\OE\EasyPool\TaskQueue.h" />
+    <ClInclude Include="..\..\src\OE\EasyPool\ThreadPool.h" />
     <ClInclude Include="..\..\test\TaskTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

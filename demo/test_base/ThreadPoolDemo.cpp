@@ -30,8 +30,9 @@
 #include <time.h>
 #include <iostream>
 #include <memory>
+#include <thread>
+#include "OE/EasyThreadPool"
 
-#include "ThreadPool.h"
 #include "../../test/TaskTest.h"
 using namespace std;
 
@@ -55,9 +56,10 @@ int main(void)
 			std::shared_ptr<OETaskTest> request = std::shared_ptr<OETaskTest>(new OETaskTest());
             
 			threadPool->addTask(request);
-            if (request->getID() == 101000) {
-				break;
-            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+//            if (request->getID() == 101000) {
+//				break;
+//            }
 		}
 
 		threadPool->release();
