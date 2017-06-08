@@ -1,7 +1,10 @@
 /**
-* @author : 陈鲁勇
-* @date   : 2017年04月
+* @file   : task.h
+* @brief  : 任务的基础类，定义了最基础的接口
 * @version: 1.0
+* @author : 陈鲁勇
+* @create : 2017年04月
+* @date   : 2017年6月3日
 * @note   : 根据 Apache 许可证 2.0 版（以下简称“许可证”）授权;
 *           除非遵守本许可，否则您不能使用这个文件。
 * @remarks: 您可以获得该许可的副本：
@@ -52,16 +55,17 @@ public:
 	virtual ~OETask() {};
 
 public:
+    // 任务类虚接口，继承这个类的必须要实现这个接口
 	virtual int doWork() = 0;
 
 	// 任务已取消回调
 	virtual int onCanceled(){ return 1; }
 	// 任务已完成
-    virtual int onCompleted(int){ return 1; }
+	virtual int onCompleted(int){ return 1; }
 
-	// 获取ID
+	// 获取任务ID
 	int getID(){ return id_; }
-	//设置ID
+	// 设置ID
 	void setID(int nID){ nRequestID_ = nID; }
 	// 获取任务取消状态
 	bool isCancelRequired(){ return bIsCancelRequired_; }
