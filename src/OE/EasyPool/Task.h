@@ -66,7 +66,7 @@ public:
 	// 获取任务ID
 	int getID(){ return id_; }
 	// 设置ID
-	void setID(int nID){ nRequestID_ = nID; }
+    void setID(int nID){ id_ = nID; }
 	// 获取任务取消状态
 	bool isCancelRequired(){ return bIsCancelRequired_; }
 	// 设置任务取消状态
