@@ -47,18 +47,20 @@ OEThreadPool::~OEThreadPool(void) {
 int OEThreadPool::init(const ThreadPoolConfig& threadPoolConfig) {
 	// 错误的设置
 	int ret = 0;
-	if (threadPoolConfig.dbTaskAddThreadRate < threadPoolConfig.dbTaskSubThreadRate) {
+	if (threadPoolConfig.dbTaskAddThreadRate < threadPoolConfig.dbTaskSubThreadRate)
 		return 87;
-	}
+	
 
 	threadPoolConfig_.nMaxThreadsNum = threadPoolConfig.nMaxThreadsNum;
 	threadPoolConfig_.nMinThreadsNum = threadPoolConfig.nMinThreadsNum;
 	threadPoolConfig_.dbTaskAddThreadRate = threadPoolConfig.dbTaskAddThreadRate;
 	threadPoolConfig_.dbTaskSubThreadRate = threadPoolConfig.dbTaskSubThreadRate;
+
+
 	// 创建线程池
-	if (threadPoolConfig_.nMinThreadsNum > 0) {
+	if (threadPoolConfig_.nMinThreadsNum > 0) 
 		ret = addProThreads(threadPoolConfig_.nMinThreadsNum);
-	}
+	
 
 	return ret;
 }
@@ -68,23 +70,30 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 	const double& rate = getThreadTaskRate();
 	int ret = 0;
 	if (priority) {
-		if (rate > 1000) {
+
+		if (rate > 1000) 
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
-		}
+		
 		taskQueue_.put_front(taskptr);
+
 	}
 	else {
+
 		// 检测任务数量
-		if (rate > 888) {
+		if (rate > 888) 
 			return 298;
-		}
+
+        // 将任务推入队列
 		taskQueue_.put_back(taskptr);
+
 	}
 
+
+    // 检查是否要扩展线程
 	if (atcCurTotalThrNum_ < threadPoolConfig_.nMaxThreadsNum 
-		&& rate > threadPoolConfig_.dbTaskAddThreadRate) {
+		&& rate > threadPoolConfig_.dbTaskAddThreadRate) 
 		ret = addProThreads(1);
-	}
+	
 
 	return ret;
 }
@@ -93,12 +102,13 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 int OEThreadPool::deleteTask(int nID) {
 	return taskQueue_.deleteTask(nID);
 }
+
 // 删除所有任务
-int OEThreadPool::deleteAllTasks(void) {
+inline int OEThreadPool::deleteAllTasks(void) {
 	return taskQueue_.deleteAllTasks();
 }
 
-std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(int nId) {
+inline std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(int nId) {
 	return taskQueue_.isTaskProcessed(nId);
 }
 
@@ -108,13 +118,16 @@ bool OEThreadPool::release(void) {
 	// 1、停止线程池。2、清楚就绪队列。3、等待执行队列为0
 	releaseThreadPool();
 	taskQueue_.release();
+
+    int i = 0;
 	while (atcCurTotalThrNum_ != 0) {
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		static int i = 0;
-		if (i++ == 10) {
-			std::cout << "Waiting for the error." << std::endl;
+		
+        // 异常等待
+		if (i++ == 10)
 			exit(23);
-		}		
+				
 	}
 
 	atcCurTotalThrNum_ = 0;
@@ -123,38 +136,40 @@ bool OEThreadPool::release(void) {
 
 // 获取当前线程任务比
 double OEThreadPool::getThreadTaskRate(void) {
-	std::unique_lock<std::mutex> lock(mutex_);
-	double dbThreadTaskRate = 0.0;
+    // @note :无所谓线程安全
+	//std::unique_lock<std::mutex> lock(mutex_)
 
-	if (atcCurTotalThrNum_ != 0) {
-		int nTaskQueSize = taskQueue_.size();
-		dbThreadTaskRate = nTaskQueSize* 1.0 / atcCurTotalThrNum_;
-	}
+	if (atcCurTotalThrNum_ != 0) 
+        return taskQueue_.size() * 1.0 / atcCurTotalThrNum_;
 	
-	return dbThreadTaskRate;
+	return 0;
 }
 // 当前线程是否需要结束
 bool OEThreadPool::shouldEnd(void) {
+
 	bool bFlag = false;
 	double dbThreadTaskRate = getThreadTaskRate();
+
+    // 检查线程与任务比率
 	if (!atcWorking_ || atcCurTotalThrNum_ > threadPoolConfig_.nMinThreadsNum
-		&& dbThreadTaskRate < threadPoolConfig_.dbTaskSubThreadRate) {
+		&& dbThreadTaskRate < threadPoolConfig_.dbTaskSubThreadRate) 
 		bFlag = true;
-	}
+	
 	return bFlag;
 }
 // 添加指定数量的处理线程
 int OEThreadPool::addProThreads(int nThreadsNum) {
-	std::thread add_thread;
+
 	try {
-		for (; nThreadsNum > 0; --nThreadsNum) {
-			add_thread = std::thread(&OEThreadPool::taskProcThread, this);
-			add_thread.detach();
-		}
+
+		for (; nThreadsNum > 0; --nThreadsNum) 
+            std::thread(&OEThreadPool::taskProcThread, this).detach();
+
 	}
 	catch (...) {
 		return 155;
 	}
+
 	return 0;
 }
 // 释放线程池
@@ -172,35 +187,43 @@ void OEThreadPool::taskProcThread(void) {
 	atcCurTotalThrNum_.fetch_add(1);
 	std::chrono::milliseconds mills_sleep(500);
 
+
 	std::shared_ptr<OETask> pTask;
 	while (atcWorking_) {
 		// 获取任务
 		pTask = taskQueue_.get();
 		if (pTask == nullptr) {
-			if (shouldEnd()) {
+
+			if (shouldEnd()) 
 				break;
-			}
+			
+            // 进入睡眠池
 			taskQueue_.wait(mills_sleep);
 			continue;
+
 		}
+
+
 		// 检测任务取消状态
-		if (pTask->isCancelRequired()) {
+		if (pTask->isCancelRequired()) 
 			pTask->onCanceled();
-		}
 		else {
 			// 处理任务
 			nTaskProcRet = pTask->doWork();
 			pTask->onCompleted(nTaskProcRet);
 		}
 
+
 		// 从运行任务队列中移除任务
 		taskQueue_.onTaskFinished(pTask->getID());
 
+
 		// 判断线程是否需要结束
-		if (shouldEnd()) {
+		if (shouldEnd()) 
 			break;
-		}
+		
 	}
+
 	// 线程个数减一
 	atcCurTotalThrNum_.fetch_sub(1);
 }
