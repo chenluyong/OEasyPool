@@ -137,6 +137,6 @@ private:
 
 };
 
-extern OEThreadPool SystemThreadPool;
+// extern OEThreadPool SystemThreadPool;
 
 #endif // __OETHREADPOOL_H__
