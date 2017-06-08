@@ -1,7 +1,10 @@
 /**
-* @author : 陈鲁勇
-* @date   : 2017年04月
+* @file   : threadpool.h
+* @brief  : 线程池类，主要解决多线程的管理问题
 * @version: 1.0
+* @author : 陈鲁勇
+* @create : 2017年04月
+* @date   : 2017年6月3日
 * @note   : 根据 Apache 许可证 2.0 版（以下简称“许可证”）授权;
 *           除非遵守本许可，否则您不能使用这个文件。
 * @remarks: 您可以获得该许可的副本：
@@ -51,19 +54,17 @@ public:
 	} ThreadPoolConfig;
 
 private:
-    /// 任务队列
-    OETaskQueue taskQueue_;
+	/// 任务队列
+	OETaskQueue taskQueue_;
 
-    /// 线程池配置（如果最小线程数量为1，则表示需要一个常驻的处理线程）
-    ThreadPoolConfig threadPoolConfig_;
-    /// 线程池是否被要求结束
-    std::atomic<bool> atcWorking_;
-    /// 当前线程个数
-    std::atomic<int>  atcCurTotalThrNum_;
-    /// 互斥量
-    std::mutex mutex_;
-
-public:
+	/// 线程池配置（如果最小线程数量为1，则表示需要一个常驻的处理线程）
+	ThreadPoolConfig threadPoolConfig_;
+	/// 线程池是否被要求结束
+	std::atomic<bool> atcWorking_;
+	/// 当前线程个数
+	std::atomic<int>  atcCurTotalThrNum_;
+	/// 互斥量
+	std::mutex mutex_;public:
 	OEThreadPool(void);
 	~OEThreadPool(void);
 
@@ -98,13 +99,13 @@ public:
 	* @brief ：删除所有任务
 	* @return：0 执行成功  非0 执行失败
 	*/
-	int deleteAllTasks(void);
+    inline int deleteAllTasks(void);
 	/**
 	* @brief ：判断任务是否执行完毕
 	* @param ：nID 任务编号
 	* @return：执行完毕，执行完返回null，否则返回任务指针
 	*/
-    std::shared_ptr<OETask> isTaskProcessed(int nId);
+    inline std::shared_ptr<OETask> isTaskProcessed(int nId);
 
 private:
 	/**
@@ -136,6 +137,6 @@ private:
 
 };
 
-//extern OEThreadPool SystemThreadPool;
+extern OEThreadPool SystemThreadPool;
 
 #endif // __OETHREADPOOL_H__
