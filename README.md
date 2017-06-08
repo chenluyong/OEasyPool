@@ -5,52 +5,56 @@
 
 # Presentation
 
- 这里主要介绍关于任务线程池的使用及结构。
+ Here are mainly introduced about the use of task thread pool and structure.
 
-## 类
+## Class
 
-- Task （任务基类）
+- OETask
 
-  该类主要实现一个任务类
+  task base class, pool call `doWork` function.
+
+  derived class: main logic function.
+
   virtual int doWork() = 0;
 
-- TaskQueue （任务队列）
+- OETaskQueue
   
-  该类主要针对任务的存储、删除、撤回等状态做管理
+  The management of the task，for example: add/sub/recall status.
 
-- ThreadPool （线程池）
+- OEThreadPool
 
-  整个线程池的核心业务处理类
+  The processing of the thread pool
 
-## 扩展
+## Extend
+ 
+ task thread pool extend, we provide a good solution.
+ inherit `OETask`, complete the main logic function.
 
- 关于任务线程池的扩展，我们已经提供了很好的解决方案。
- 例如继承 `Task` 类，来完成线程任务的扩展。
+ for example: see `TaskTest.h`.
 
- 例如案例中 `TaskTest.h` 中使用的那样，将主要的业务逻辑放在 doWork 中即可。
+## Config
 
-## 配置
+ Regarding the thread pool configuration, we also set aside the interface
 
- 关于线程池的配置，我们也留出了接口。
- 通过 `OEThreadPool` 类中的 `tagThreadPoolConfig` 结构体与 `init` 函数，进行线程池的资源配置。
 
- 代码中已经有了比较详尽的注释，但是在这里我还是想贴出来再强调一遍，虽然他很简单，但是看起来非常重要。
+ use class `OEThreadPool` :: struct `tagThreadPoolConfig` and function `init`, can config thread pool.
+
+ Code has more detailed comments, but I still want to post here again, though he is very simple, but it seems very important.
  
 ```
-/// 线程池配置参数
+/// thread config
 typedef struct tagThreadPoolConfig {
-	int nMaxThreadsNum;		    /// 最大线程数量
-	int nMinThreadsNum;		    /// 最小线程数量
-	double dbTaskAddThreadRate;   /// 增 最大线程任务比 (任务数量与线程数量，什么比例的时候才加)
-	double dbTaskSubThreadRate;   /// 减 最小线程任务比 (任务数量与线程数量，什么比例的时候才减)
+	int nMaxThreadsNum;		    /// max thread number
+	int nMinThreadsNum;		    /// min thread number
+	double dbTaskAddThreadRate;   /// add - max thread task rate （decide when to increase）
+	double dbTaskSubThreadRate;   /// sub - max thread task rate （decide when to reduce）
 } ThreadPoolConfig;
 ```
 
- 线程池在没有合理的init之前，是不会开展工作的。
-
+ before init, thread pool didn't do anything.
  
 
-# 其他
+# Other
 
  You didn't do anything, You get it.
 
