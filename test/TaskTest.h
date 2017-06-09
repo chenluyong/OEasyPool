@@ -39,8 +39,10 @@ class OETaskTest
 	: public OETask
 {
 public:
-	OETaskTest();
-	virtual ~OETaskTest();
+    OETaskTest() {
+        std::cout << "task : " << id_ << " is create." << std::endl;
+    }
+    virtual ~OETaskTest() {}
 
 	virtual int doWork() {
 		// 开始工作
