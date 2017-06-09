@@ -25,7 +25,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -50,7 +50,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\</OutDir>
     <IncludePath>..\..\src;$(IncludePath)</IncludePath>
-    <IntDir>..\log\Release\test_base\</IntDir>
+    <IntDir>..\log\Release\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -86,7 +86,6 @@
     <ClCompile Include="ThreadPoolDemo.cpp" />
     <ClCompile Include="..\..\src\OE\EasyPool\TaskQueue.cpp" />
     <ClCompile Include="..\..\src\OE\EasyPool\ThreadPool.cpp" />
-    <ClCompile Include="..\..\test\TaskTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\OE\EasyPool\Task.h" />
