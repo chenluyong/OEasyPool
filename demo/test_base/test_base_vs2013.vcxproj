@@ -44,7 +44,7 @@
     <IncludePath>../../src/;$(IncludePath)</IncludePath>
     <OutDir>..\..\bin\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <IntDir>..\log\Debug\test_base\</IntDir>
+    <IntDir>..\log\Debug\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
