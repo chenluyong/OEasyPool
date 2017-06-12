@@ -35,6 +35,7 @@
 #define __OETASK_H__
 
 #include <atomic>
+#include <time.h>
 
 // 任务基类
 class OETask
@@ -44,14 +45,18 @@ protected:
 
     // 任务的唯一标识
     int id_;
+    // 任务创建时间 （非Unix时间戳）
+    clock_t createTime_;
 
 private:
+
     static int nRequestID_;
     // 任务取消状态
-    std::atomic<bool>  bIsCancelRequired_;
+    std::atomic<bool>  isCancelRequired_;
 
 public:
-	OETask() :id_(nRequestID_++), bIsCancelRequired_(false) {};
+    OETask() :id_(nRequestID_++), isCancelRequired_(false),
+        createTime_(clock()){}
 	virtual ~OETask() {};
 
 public:
@@ -61,16 +66,19 @@ public:
 	// 任务已取消回调
 	virtual int onCanceled(){ return 1; }
 	// 任务已完成
-	virtual int onCompleted(int){ return 1; }
+    virtual int onCompleted(int){ return 1; }
+
+    // 任务是否超时
+    virtual bool isTimeout(const clock_t& now) {
+        return ((now - createTime_) > 5000);
+    }
 
 	// 获取任务ID
-	int getID(){ return id_; }
-	// 设置ID
-    void setID(int nID){ id_ = nID; }
-	// 获取任务取消状态
-	bool isCancelRequired(){ return bIsCancelRequired_; }
+	int getID(void){ return id_; }
+    // 获取任务取消状态
+    bool isCancelRequired(){ return isCancelRequired_; }
 	// 设置任务取消状态
-	void setCancelRequired(){ bIsCancelRequired_ = true; }
+    void setCancelRequired(){ isCancelRequired_ = true; }
 
 
 };
