@@ -52,9 +52,11 @@ public:
 
 private:
 	/// 就绪任务队列
-	std::deque<std::shared_ptr<OETask> > queue_;
-	/// 运行任务map
-	std::unordered_map<int, std::shared_ptr<OETask>> mapDoingTask_;
+    std::deque<std::shared_ptr<OETask> > queue_;
+    /// 运行任务map
+    std::unordered_map<int, std::shared_ptr<OETask> > mapDoingTask_;
+    /// 结束任务队列
+    std::list <std::shared_ptr<OETask> > listOverTask_;
 	/// 互斥量
 	std::mutex mutex_;
 	/// 条件变量
@@ -65,12 +67,12 @@ public:
 	* @brief ：向队列的末尾插入任务
 	* @param ：task 任务类
 	*/
-	void put_back(std::shared_ptr<OETask> task);
+	void put_back(std::shared_ptr<OETask> &task);
 	/**
 	* @brief ：向队列的头部插入任务
 	* @param ：task 任务类
 	*/
-	void put_front(std::shared_ptr<OETask> task);
+	void put_front(std::shared_ptr<OETask> &task);
 	/**
 	* @brief ：获取队首（并将任务加到运行任务列表中）
 	* @return：任务类
