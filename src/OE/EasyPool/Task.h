@@ -34,8 +34,9 @@
 #ifndef __OETASK_H__
 #define __OETASK_H__
 
-#include <atomic>
 #include <time.h>
+#include <atomic>
+#include <memory>
 
 // 任务基类
 class OETask
@@ -82,6 +83,8 @@ public:
 
 
 };
+
+typedef std::shared_ptr<OETask> OETaskPtr;
 
 __declspec(selectany) int OETask::nRequestID_ = 100000;
 
