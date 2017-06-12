@@ -102,13 +102,13 @@ public:
 	* @brief ：删除所有任务
 	* @return：0 执行成功  非0 执行失败
 	*/
-    inline int deleteAllTasks(void);
+    int deleteAllTasks(void);
 	/**
 	* @brief ：判断任务是否执行完毕
 	* @param ：nID 任务编号
 	* @return：执行完毕，执行完返回null，否则返回任务指针
 	*/
-    inline std::shared_ptr<OETask> isTaskProcessed(int nId);
+    std::shared_ptr<OETask> isTaskProcessed(int nId);
 
 private:
 	/**

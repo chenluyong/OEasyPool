@@ -69,19 +69,13 @@ int OEThreadPool::init(const ThreadPoolConfig& threadPoolConfig) {
 int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 	const double& rate = getThreadTaskRate();
 	int ret = 0;
-	if (priority) {
-
-		if (rate > 1000) 
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
-		
+	if (priority)
 		taskQueue_.put_front(taskptr);
-
-	}
 	else {
 
 		// 检测任务数量
-		if (rate > 888) 
-			return 298;
+		if (rate > 100) 
+            ret = 298;
 
         // 将任务推入队列
 		taskQueue_.put_back(taskptr);
@@ -92,7 +86,7 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
     // 检查是否要扩展线程
 	if (atcCurTotalThrNum_ < threadPoolConfig_.nMaxThreadsNum 
 		&& rate > threadPoolConfig_.dbTaskAddThreadRate) 
-		ret = addProThreads(1);
+        ret = addProThreads(1);
 	
 
 	return ret;
@@ -104,11 +98,11 @@ int OEThreadPool::deleteTask(int nID) {
 }
 
 // 删除所有任务
-inline int OEThreadPool::deleteAllTasks(void) {
+int OEThreadPool::deleteAllTasks(void) {
 	return taskQueue_.deleteAllTasks();
 }
 
-inline std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(int nId) {
+std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(int nId) {
 	return taskQueue_.isTaskProcessed(nId);
 }
 
