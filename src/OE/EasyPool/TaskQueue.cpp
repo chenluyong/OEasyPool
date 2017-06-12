@@ -30,7 +30,6 @@
 
 #include "TaskQueue.h"
 
-#include <time.h>
 #include <thread>
 
 OETaskQueue::OETaskQueue() {
@@ -45,20 +44,6 @@ void OETaskQueue::put_back(std::shared_ptr<OETask>& task) {
 	std::unique_lock<std::mutex> lock(mutex_);
 
     queue_.push_back(task);
-
-    // 超时任务检测
-    const clock_t &tm = clock();
-    for (auto iter = queue_.end();
-        --iter != queue_.begin();) {
-
-        if (iter->get()->isTimeout(tm)) {
-            iter->get()->onCanceled();
-            iter = queue_.erase(iter);
-        }
-        else
-            break;
-
-    }
 
 	conditPut_.notify_one();
 }
@@ -87,6 +72,7 @@ std::shared_ptr<OETask> OETaskQueue::get(void) {
 
 //获取大小
 size_t OETaskQueue::size(void) {
+	std::unique_lock<std::mutex> lock(mutex_);
 	return queue_.size();
 }
 
@@ -186,14 +172,8 @@ int OETaskQueue::onTaskFinished(int nID) {
 	// std::unordered_map<int64_t, std::shared_ptr<OETask>>::iterator
 	auto it_map = mapDoingTask_.find(nID);
 
-    if (it_map != mapDoingTask_.end()) {
-        listOverTask_.push_back(it_map->second);
+	if (it_map != mapDoingTask_.end()) 
 		mapDoingTask_.erase(it_map);
-    }
-
-    // 内存统一释放
-    if (listOverTask_.size() > 10000)
-        listOverTask_.clear();
 	
 	return 0;
 }

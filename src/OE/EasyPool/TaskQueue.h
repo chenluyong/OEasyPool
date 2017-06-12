@@ -1,5 +1,4 @@
 /**
-
 * @file   : taskqueue.h
 * @brief  : 任务队列，主要保证任务的执行和访问安全
 * @version: 1.0
@@ -55,8 +54,6 @@ private:
     std::deque<std::shared_ptr<OETask> > queue_;
     /// 运行任务map
     std::unordered_map<int, std::shared_ptr<OETask> > mapDoingTask_;
-    /// 结束任务队列
-    std::list <std::shared_ptr<OETask> > listOverTask_;
 	/// 互斥量
 	std::mutex mutex_;
 	/// 条件变量
