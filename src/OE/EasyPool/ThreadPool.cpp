@@ -40,13 +40,13 @@ OEThreadPool::OEThreadPool(void)
 }
 
 OEThreadPool::~OEThreadPool(void) {
+    // @note: 曾经因析构自动调用 release 触发了错误
     release();
 }
 
 // 初始化资源
 int OEThreadPool::init(const ThreadPoolConfig& threadPoolConfig) {
 	// 错误的设置
-	int ret = 0;
 	if (threadPoolConfig.dbTaskAddThreadRate < threadPoolConfig.dbTaskSubThreadRate)
 		return 87;
 	
@@ -57,6 +57,7 @@ int OEThreadPool::init(const ThreadPoolConfig& threadPoolConfig) {
 	threadPoolConfig_.dbTaskSubThreadRate = threadPoolConfig.dbTaskSubThreadRate;
 
 
+    int ret = 0;
 	// 创建线程池
 	if (threadPoolConfig_.nMinThreadsNum > 0) 
 		ret = addProThreads(threadPoolConfig_.nMinThreadsNum);
@@ -69,8 +70,14 @@ int OEThreadPool::init(const ThreadPoolConfig& threadPoolConfig) {
 int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 	const double& rate = getThreadTaskRate();
 	int ret = 0;
-	if (priority)
+	if (priority) {
+
+		if (rate > 1000) 
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		
 		taskQueue_.put_front(taskptr);
+
+	}
 	else {
 
 		// 检测任务数量
@@ -201,11 +208,9 @@ void OEThreadPool::taskProcThread(void) {
 		// 检测任务取消状态
 		if (pTask->isCancelRequired()) 
 			pTask->onCanceled();
-		else {
+		else 
 			// 处理任务
-			nTaskProcRet = pTask->doWork();
-			pTask->onCompleted(nTaskProcRet);
-		}
+            pTask->onCompleted(pTask->doWork());
 
 
 		// 从运行任务队列中移除任务

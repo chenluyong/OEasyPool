@@ -40,6 +40,12 @@
 #include "TaskQueue.h"
 
 
+// 1. 线程池的初始化  (init)
+//  while:
+//    1. 创建任务类
+//    2. 添加任务到线程池当中  addTask
+//    3. 线程池异步处理
+// 2. 清理线程池资源  (release)
 
 /// 任务管理类
 class OEThreadPool
