@@ -50,7 +50,7 @@ protected:
 
 private:
 
-    static size_t nRequestID_;
+    static std::atomic<size_t> nRequestID_;
     // 任务取消状态
     std::atomic<bool>  isCancelRequired_;
 
@@ -83,6 +83,6 @@ public:
 
 };
 
-__declspec(selectany) size_t OETask::nRequestID_ = 100000;
+__declspec(selectany) std::atomic<size_t> OETask::nRequestID_ = 100000;
 
 #endif // __OETASK_H__
