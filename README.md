@@ -7,6 +7,9 @@
 
  Here are mainly introduced about the use of task thread pool and structure.
 
+![thread pool uml](https://github.com/chenluyong/OEasyPool/blob/master/doc/chart/task%20thread%20pool%20chart%20uml%20-%202017-06-13.jpg)
+
+
 ## Class
 
 - OETask
