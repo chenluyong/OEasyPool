@@ -40,7 +40,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "Task.h"
+class OETask;
 
 /// 任务队列类
 class OETaskQueue

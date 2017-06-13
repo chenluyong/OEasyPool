@@ -32,11 +32,13 @@
 #include <iostream>
 #include <thread>
 
+#include "Task.h"
+#include "TaskQueue.h"
 
 //OEThreadPool SystemThreadPool;
 
 OEThreadPool::OEThreadPool(void)
- :atcCurTotalThrNum_(0), atcWorking_(true) {
+:taskQueue_(new OETaskQueue()),atcCurTotalThrNum_(0), atcWorking_(true) {
 }
 
 OEThreadPool::~OEThreadPool(void) {
@@ -75,7 +77,7 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 		if (rate > 1000) 
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		
-		taskQueue_.put_front(taskptr);
+		taskQueue_->put_front(taskptr);
 
 	}
 	else {
@@ -88,7 +90,7 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
             
 
         // 将任务推入队列
-		taskQueue_.put_back(taskptr);
+        taskQueue_->put_back(taskptr);
 
 	}
 
@@ -104,16 +106,16 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 
 // 删除任务（从就绪队列删除，如果就绪队列没有，则看执行队列有没有，有的话置下取消状态位）
 int OEThreadPool::deleteTask(size_t nID) {
-	return taskQueue_.deleteTask(nID);
+    return taskQueue_->deleteTask(nID);
 }
 
 // 删除所有任务
 int OEThreadPool::deleteAllTasks(void) {
-	return taskQueue_.deleteAllTasks();
+    return taskQueue_->deleteAllTasks();
 }
 
 std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(size_t nId) {
-	return taskQueue_.isTaskProcessed(nId);
+    return taskQueue_->isTaskProcessed(nId);
 }
 
 
@@ -121,7 +123,7 @@ std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(size_t nId) {
 bool OEThreadPool::release(void) {
 	// 1、停止线程池。2、清楚就绪队列。3、等待执行队列为0
 	releaseThreadPool();
-	taskQueue_.release();
+    taskQueue_->release();
 
     int i = 0;
 	while (atcCurTotalThrNum_ != 0) {
@@ -144,7 +146,7 @@ double OEThreadPool::getThreadTaskRate(void) {
 	//std::unique_lock<std::mutex> lock(mutex_)
 
 	if (atcCurTotalThrNum_ != 0) 
-        return taskQueue_.size() * 1.0 / atcCurTotalThrNum_;
+        return taskQueue_->size() * 1.0 / atcCurTotalThrNum_;
 	
 	return 0;
 }
@@ -195,14 +197,14 @@ void OEThreadPool::taskProcThread(void) {
 	std::shared_ptr<OETask> pTask;
 	while (atcWorking_) {
 		// 获取任务
-		pTask = taskQueue_.get();
+        pTask = taskQueue_->get();
 		if (pTask == nullptr) {
 
 			if (shouldEnd()) 
 				break;
 			
             // 进入睡眠池
-			taskQueue_.wait(mills_sleep);
+            taskQueue_->wait(mills_sleep);
 			continue;
 
 		}
@@ -217,7 +219,7 @@ void OEThreadPool::taskProcThread(void) {
 
 
 		// 从运行任务队列中移除任务
-		taskQueue_.onTaskFinished(pTask->getID());
+        taskQueue_->onTaskFinished(pTask->getID());
 
 
 		// 判断线程是否需要结束

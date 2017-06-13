@@ -32,6 +32,8 @@
 
 #include <thread>
 
+#include "Task.h"
+
 OETaskQueue::OETaskQueue() {
 }
 
