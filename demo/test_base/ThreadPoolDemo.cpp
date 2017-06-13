@@ -40,32 +40,34 @@ using namespace std;
 
 int main(void)
 {
-	OEThreadPool::ThreadPoolConfig threadPoolConfig;
-	threadPoolConfig.nMaxThreadsNum = 50;
-	threadPoolConfig.nMinThreadsNum = 5;
-	threadPoolConfig.dbTaskAddThreadRate = 3;
+    OEThreadPool::ThreadPoolConfig threadPoolConfig;
+    threadPoolConfig.nMaxThreadsNum = 50;
+    threadPoolConfig.nMinThreadsNum = 5;
+    threadPoolConfig.dbTaskAddThreadRate = 3;
     threadPoolConfig.dbTaskSubThreadRate = 0.5;
     clock_t start = clock();
-	{
+    {
 
-		std::shared_ptr<OEThreadPool> threadPool(new OEThreadPool);
-		threadPool->init(threadPoolConfig);
+        std::shared_ptr<OEThreadPool> threadPool(new OEThreadPool);
+        threadPool->init(threadPoolConfig);
 
-		while (true)
-		{
-			std::shared_ptr<OETaskTest> request = std::shared_ptr<OETaskTest>(new OETaskTest());
-            
-			threadPool->addTask(request);
-//            if (request->getID() == 101000) {
-//				break;
-//            }
-		}
+        int i = 0;
+        while (true)
+        {
+#ifdef _INC_WINDOWS
+            if (i++ % 100000 == 0)
+                Sleep(rand() % 5001);
+#endif
+            std::shared_ptr<OETaskTest> request = std::shared_ptr<OETaskTest>(new OETaskTest());
 
-		threadPool->release();
+            threadPool->addTask(request);
+        }
+
+        threadPool->release();
     }
     clock_t finish = clock();
-    std::cout << "duration:" << finish - start << "ms"<< std::endl;
-	getchar();
-	return 0;
+    std::cout << "duration:" << finish - start << "ms" << std::endl;
+    getchar();
+    return 0;
 }
 
