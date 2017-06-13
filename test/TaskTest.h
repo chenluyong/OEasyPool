@@ -39,7 +39,7 @@
 #include "OE/EasyPool/Task.h"
 
 class OETaskTest
-	: public OETask
+    : public OETask
 {
 public:
     OETaskTest() {
@@ -47,26 +47,26 @@ public:
     }
     virtual ~OETaskTest() {}
 
-	virtual int doWork() {
-		// 开始工作
-#ifdef _WINDOWS_
+    virtual int doWork() {
+        // 开始工作
+#ifdef _INC_WINDOWS
         Sleep(rand() % 300);
 #endif
         std::cout << "task : " << id_ << " doing." << std::endl;
-		return 0;
-	}
+        return 0;
+    }
 
-	virtual int onCanceled(void) {
-		// 任务被取消
-		std::cout << "task : " << id_ << " canceled." << std::endl;
-		return 0;
-	}
-	// 任务已完成
+    virtual int onCanceled(void) {
+        // 任务被取消
+        std::cout << "task : " << id_ << " canceled." << std::endl;
+        return 0;
+    }
+    // 任务已完成
     virtual int onCompleted(int) {
-		// 任务已完成，返回码为code
-		std::cout << "task : " << id_ << " completed." << std::endl;
-		return 0;
-	}
+        // 任务已完成，返回码为code
+        std::cout << "task : " << id_ << " completed." << std::endl;
+        return 0;
+    }
 };
 
 #endif // __TASKTEST_H__
