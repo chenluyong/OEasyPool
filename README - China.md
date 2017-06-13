@@ -5,6 +5,8 @@
 # 简介
 
  这里主要介绍关于任务线程池的使用及结构。
+ 
+ [!thread pool uml](https://github.com/chenluyong/OEasyPool/blob/master/doc/chart/task%20thread%20pool%20chart%20uml%20-%202017-06-13.jpg)
 
 ## 类
 
