@@ -29,9 +29,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\OE\EasyPool\TaskQueue.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\OE\EasyPool\ThreadPool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

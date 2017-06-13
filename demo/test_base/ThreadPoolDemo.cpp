@@ -41,7 +41,7 @@ using namespace std;
 int main(void)
 {
 	OEThreadPool::ThreadPoolConfig threadPoolConfig;
-	threadPoolConfig.nMaxThreadsNum = 100;
+	threadPoolConfig.nMaxThreadsNum = 50;
 	threadPoolConfig.nMinThreadsNum = 5;
 	threadPoolConfig.dbTaskAddThreadRate = 3;
     threadPoolConfig.dbTaskSubThreadRate = 0.5;

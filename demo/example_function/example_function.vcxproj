@@ -89,7 +89,6 @@
     <ClInclude Include="..\..\test\OEFunctionTask.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\OE\EasyPool\TaskQueue.cpp" />
     <ClCompile Include="..\..\src\OE\EasyPool\ThreadPool.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
