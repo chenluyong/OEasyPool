@@ -38,7 +38,7 @@
 //OEThreadPool SystemThreadPool;
 
 OEThreadPool::OEThreadPool(void)
-:taskQueue_(new OETaskQueue()),atcCurTotalThrNum_(0), atcWorking_(true) {
+:taskQueue_(new OETaskQueue<OETask>()),atcCurTotalThrNum_(0), atcWorking_(true) {
 }
 
 OEThreadPool::~OEThreadPool(void) {

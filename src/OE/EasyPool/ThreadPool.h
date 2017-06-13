@@ -41,8 +41,7 @@
 #include <memory>
 #include <mutex>
 
-class OETask;
-class OETaskQueue;
+#include "TaskQueue.h"
 
 // 1. 线程池的初始化  (init)
 //  while:
@@ -50,6 +49,8 @@ class OETaskQueue;
 //    2. 添加任务到线程池当中  addTask
 //    3. 线程池异步处理
 // 2. 清理线程池资源  (release)
+
+class OETask;
 
 /// 任务管理类
 class OEThreadPool
@@ -65,7 +66,7 @@ public:
 
 private:
 	/// 任务队列
-    std::shared_ptr<OETaskQueue> taskQueue_;
+    std::shared_ptr<OETaskQueue<OETask> > taskQueue_;
 
 	/// 线程池配置（如果最小线程数量为1，则表示需要一个常驻的处理线程）
 	ThreadPoolConfig threadPoolConfig_;
