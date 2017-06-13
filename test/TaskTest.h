@@ -32,6 +32,9 @@
 #define __TASKTEST_H__
 
 #include <iostream>
+#if ( defined(_WIN32) || defined(_WINDOWS_) || defined(__WINDOWS_) )
+#include <windows.h>
+#endif
 
 #include "OE/EasyPool/Task.h"
 
@@ -46,7 +49,10 @@ public:
 
 	virtual int doWork() {
 		// 开始工作
-		std::cout << "task : " << id_ << " do something." << std::endl;
+#ifdef _WINDOWS_
+        Sleep(rand() % 300);
+#endif
+        std::cout << "task : " << id_ << " doing." << std::endl;
 		return 0;
 	}
 
