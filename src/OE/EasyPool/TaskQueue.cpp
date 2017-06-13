@@ -100,7 +100,7 @@ void OETaskQueue::release(void) {
 }
 
 //删除任务（从就绪队列删除，如果就绪队列没有，则看执行队列有没有，有的话置下取消状态位）
-int OETaskQueue::deleteTask(int nID) {
+int OETaskQueue::deleteTask(size_t nID) {
 
 	std::unique_lock<std::mutex> lock(mutex_, std::defer_lock);
 	lock.lock();
@@ -165,7 +165,7 @@ int OETaskQueue::deleteAllTasks(void) {
 }
 
 //任务完成回调（从运行列表中删除指定任务）
-int OETaskQueue::onTaskFinished(int nID) {
+int OETaskQueue::onTaskFinished(size_t nID) {
 
 	std::unique_lock<std::mutex> lock(mutex_);
 
@@ -179,7 +179,7 @@ int OETaskQueue::onTaskFinished(int nID) {
 }
 
 //判断任务是否执行完毕
-std::shared_ptr<OETask> OETaskQueue::isTaskProcessed(int nId) {
+std::shared_ptr<OETask> OETaskQueue::isTaskProcessed(size_t nId) {
 	std::unique_lock<std::mutex> lock(mutex_);
 	// std::deque<std::shared_ptr<OETask>>::iterator
 	auto it = queue_.begin();

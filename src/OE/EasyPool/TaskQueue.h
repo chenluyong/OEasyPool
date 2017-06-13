@@ -53,7 +53,7 @@ private:
 	/// 就绪任务队列
     std::deque<std::shared_ptr<OETask> > queue_;
     /// 运行任务map
-    std::unordered_map<int, std::shared_ptr<OETask> > mapDoingTask_;
+    std::unordered_map<size_t, std::shared_ptr<OETask> > mapDoingTask_;
 	/// 互斥量
 	std::mutex mutex_;
 	/// 条件变量
@@ -90,7 +90,7 @@ public:
 	* @param ：nID 任务的编号
 	* @return：成功返回0 失败返回非0
 	*/
-	int deleteTask(int nID);
+    int deleteTask(size_t nID);
 	/**
 	* @brief ：删除所有任务
 	* @return：成功返回0 失败返回非0
@@ -101,13 +101,13 @@ public:
 	* @param ：nID 任务的编号
 	* @return：成功返回0 失败返回非0
 	*/
-	int onTaskFinished(int nID);
+    int onTaskFinished(size_t nID);
 	/**
 	* @brief ：判断任务是否执行完毕
 	* @param ：nID 任务的编号
 	* @return：任务类
 	*/
-    std::shared_ptr<OETask> isTaskProcessed(int nId);
+    std::shared_ptr<OETask> isTaskProcessed(size_t nId);
 
 	/**
 	* @brief ：等待有任务到达（带超时：超时自动唤醒）

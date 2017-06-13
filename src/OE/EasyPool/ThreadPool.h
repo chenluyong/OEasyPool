@@ -102,7 +102,7 @@ public:
 	* @param ：nID 任务编号
 	* @return：0 执行成功  非0 执行失败
 	*/
-	int deleteTask(int nID);
+    int deleteTask(size_t nID);
 
 	/**
 	* @brief ：删除所有任务
@@ -114,7 +114,7 @@ public:
 	* @param ：nID 任务编号
 	* @return：执行完毕，执行完返回null，否则返回任务指针
 	*/
-    std::shared_ptr<OETask> isTaskProcessed(int nId);
+    std::shared_ptr<OETask> isTaskProcessed(size_t nId);
 
 private:
 	/**

@@ -103,7 +103,7 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 }
 
 // 删除任务（从就绪队列删除，如果就绪队列没有，则看执行队列有没有，有的话置下取消状态位）
-int OEThreadPool::deleteTask(int nID) {
+int OEThreadPool::deleteTask(size_t nID) {
 	return taskQueue_.deleteTask(nID);
 }
 
@@ -112,7 +112,7 @@ int OEThreadPool::deleteAllTasks(void) {
 	return taskQueue_.deleteAllTasks();
 }
 
-std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(int nId) {
+std::shared_ptr<OETask> OEThreadPool::isTaskProcessed(size_t nId) {
 	return taskQueue_.isTaskProcessed(nId);
 }
 
