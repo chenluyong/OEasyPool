@@ -74,8 +74,6 @@ private:
 	std::atomic<bool> atcWorking_;
 	/// 当前线程个数
 	std::atomic<int>  atcCurTotalThrNum_;
-	/// 互斥量
-	std::mutex mutex_;
 
 public:
 
