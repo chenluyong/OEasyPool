@@ -81,8 +81,11 @@ int OEThreadPool::addTask(std::shared_ptr<OETask> taskptr, bool priority) {
 	else {
 
 		// 检测任务数量
-		if (rate > 100) 
-            ret = 298;
+        if (rate > 100) {
+            taskptr->onCanceled();
+            return 298;
+        }
+            
 
         // 将任务推入队列
 		taskQueue_.put_back(taskptr);
