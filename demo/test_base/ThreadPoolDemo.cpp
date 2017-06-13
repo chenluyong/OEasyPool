@@ -55,7 +55,7 @@ int main(void)
         while (true)
         {
 #ifdef _INC_WINDOWS
-            if (i++ % 100000 == 0)
+            if (i++ % 1000 == 0)
                 Sleep(rand() % 5001);
 #endif
             std::shared_ptr<OETaskTest> request = std::shared_ptr<OETaskTest>(new OETaskTest());
