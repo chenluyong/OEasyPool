@@ -44,13 +44,13 @@ class OETask
 protected:
 
     // 任务的唯一标识
-    int id_;
+    unsigned int id_;
     // 任务创建时间 （非Unix时间戳）
     clock_t createTime_;
 
 private:
 
-    static int nRequestID_;
+    static unsigned int nRequestID_;
     // 任务取消状态
     std::atomic<bool>  isCancelRequired_;
 
@@ -74,7 +74,7 @@ public:
     }
 
 	// 获取任务ID
-	int getID(void){ return id_; }
+    unsigned int getID(void){ return id_; }
     // 获取任务取消状态
     bool isCancelRequired(){ return isCancelRequired_; }
 	// 设置任务取消状态
@@ -83,6 +83,6 @@ public:
 
 };
 
-__declspec(selectany) int OETask::nRequestID_ = 100000;
+__declspec(selectany) unsigned int OETask::nRequestID_ = 100000;
 
 #endif // __OETASK_H__
