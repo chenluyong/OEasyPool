@@ -17,4 +17,4 @@
 
 # 关于调用
 
-可以使用本项目自带的一些demo进行测试调用，或者通过文章了解这份代码的使用。 [/[前往/]](http://blog.csdn.net/csnd_ayo/article/details/72457190)
+可以使用本项目自带的一些demo进行测试调用，或者通过文章了解这份代码的使用。 [[前往]](http://blog.csdn.net/csnd_ayo/article/details/72457190)
