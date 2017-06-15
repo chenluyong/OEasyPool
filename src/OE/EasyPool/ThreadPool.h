@@ -58,22 +58,22 @@ class OEThreadPool
 public:
     /// 线程池配置参数
     typedef struct tagThreadPoolConfig {
-        int nMaxThreadsNum;		    /// 最大线程数量
-        int nMinThreadsNum;		    /// 最小线程数量
-        double dbTaskAddThreadRate;   /// 增 最大线程任务比 (任务数量与线程数量，什么比例的时候才加)
-        double dbTaskSubThreadRate;   /// 减 最小线程任务比 (任务数量与线程数量，什么比例的时候才减)
+        int     nMaxThreadsNum;		    /// 最大线程数量
+        int     nMinThreadsNum;		    /// 最小线程数量
+        double  dbTaskAddThreadRate;    /// 增 最大线程任务比 (任务数量与线程数量，什么比例的时候才加)
+        double  dbTaskSubThreadRate;    /// 减 最小线程任务比 (任务数量与线程数量，什么比例的时候才减)
     } ThreadPoolConfig;
 
 private:
     /// 任务队列
-    std::shared_ptr<OETaskQueue<OETask> > taskQueue_;
+    std::shared_ptr<OETaskQueue<OETask> >   taskQueue_;
 
     /// 线程池配置（如果最小线程数量为1，则表示需要一个常驻的处理线程）
-    ThreadPoolConfig threadPoolConfig_;
+    ThreadPoolConfig                        threadPoolConfig_;
     /// 线程池是否被要求结束
-    std::atomic<bool> atcWorking_;
+    std::atomic<bool>                       atcWorking_;
     /// 当前线程个数
-    std::atomic<int>  atcCurTotalThrNum_;
+    std::atomic<int>                        atcCurTotalThrNum_;
 
 public:
 

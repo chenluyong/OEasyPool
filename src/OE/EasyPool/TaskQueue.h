@@ -48,15 +48,15 @@ class OETaskQueue {
 
 private:
 
-    /// 就绪任务队列
-    std::deque<std::shared_ptr<T> > queue_;
-    std::mutex mutexQueue_;
-    /// 运行任务map
+    /// 就绪任务队列                               
+    std::mutex                          mutexQueue_;
+    std::deque<std::shared_ptr<T> >     queue_;
+    /// 条件变量                                      
+    std::mutex                          mutexConditPut_;
+    std::condition_variable             conditPut_;
+    /// 运行任务map                                   
+    std::mutex                          mutexDoingTask_;
     std::unordered_map<size_t, std::shared_ptr<T> > mapDoingTask_;
-    std::mutex mutexDoingTask_;
-    /// 条件变量
-    std::condition_variable conditPut_;
-    std::mutex mutexConditPut_;
 
 public:
 

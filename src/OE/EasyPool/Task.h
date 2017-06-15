@@ -44,15 +44,15 @@ class OETask
 protected:
 
     // 任务的唯一标识
-    size_t id_;
+    size_t                      id_;
     // 任务创建时间 （非Unix时间戳）
-    clock_t createTime_;
+    clock_t                     createTime_;
 
 private:
 
-    static std::atomic<size_t> nRequestID_;
+    static std::atomic<size_t>  nRequestID_;
     // 任务取消状态
-    std::atomic<bool>  isCancelRequired_;
+    std::atomic<bool>           isCancelRequired_;
 
 public:
     OETask(void) :id_(nRequestID_++), isCancelRequired_(false),
