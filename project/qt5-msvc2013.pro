@@ -10,7 +10,6 @@ DESTDIR   = ../bin
 
 
 SOURCES += "../demo/test_base/ThreadPoolDemo.cpp" \
-    ../src/OE/EasyPool/TaskQueue.cpp \
     ../src/OE/EasyPool/ThreadPool.cpp
 
 

@@ -84,9 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ThreadPoolDemo.cpp" />
-    <ClCompile Include="..\..\src\OE\EasyPool\TaskQueue.cpp" />
     <ClCompile Include="..\..\src\OE\EasyPool\ThreadPool.cpp" />
-    <ClCompile Include="..\..\test\TaskTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\OE\EasyPool\Task.h" />

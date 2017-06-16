@@ -55,30 +55,44 @@ private:
     std::atomic<bool>           isCancelRequired_;
 
 public:
+
     OETask(void) :id_(nRequestID_++), isCancelRequired_(false),
         createTime_(clock()){}
+
     virtual ~OETask(void) {};
 
 public:
+
     // 任务类虚接口，继承这个类的必须要实现这个接口
-    virtual int doWork(void) = 0;
+    virtual int 
+	doWork(void) = 0;
 
     // 任务已取消回调
-    virtual int onCanceled(void){ return 1; }
+    virtual int 
+	onCanceled(void){ return 1; }
+
     // 任务已完成
-    virtual int onCompleted(int){ return 1; }
+    virtual int 
+	onCompleted(int){ return 1; }
 
     // 任务是否超时
-    virtual bool isTimeout(const clock_t& now) {
+    virtual bool 
+	isTimeout(const clock_t& now) {
         return ((now - createTime_) > 5000);
     }
 
     // 获取任务ID
-    size_t getID(void){ return id_; }
+
+    size_t 
+	getID(void){ return id_; }
+
     // 获取任务取消状态
-    bool isCancelRequired(void){ return isCancelRequired_; }
+    bool 
+	isCancelRequired(void){ return isCancelRequired_; }
+
     // 设置任务取消状态
-    void setCancelRequired(void){ isCancelRequired_ = true; }
+    void 
+	setCancelRequired(void){ isCancelRequired_ = true; }
 
 
 };

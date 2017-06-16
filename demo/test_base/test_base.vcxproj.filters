@@ -24,12 +24,6 @@
     <ClCompile Include="ThreadPoolDemo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\TaskTest.cpp">
-      <Filter>test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\OE\EasyPool\TaskQueue.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\OE\EasyPool\ThreadPool.cpp">
       <Filter>src</Filter>
     </ClCompile>

@@ -9,6 +9,7 @@
 class OEFunctionTask :
     public OETask
 {
+
 private:
 
     typedef std::function<int(void)> PvFunc;
@@ -19,19 +20,23 @@ public:
 
     virtual ~OEFunctionTask(void) {}
 
+
     template <typename F, typename... Args>
-    void asynBind(F(*f)(Args...), Args... args) {
+    void 
+	asynBind(F(*f)(Args...), Args... args) {
         pf_ = std::bind(f, args...);
     }
 
 
-    virtual int doWork(void) {
+    virtual int 
+	doWork(void) {
         if (pf_ == nullptr)
             return 86;
         return pf_();
     };
 
 private:
+
     PvFunc pf_;
 
 };
